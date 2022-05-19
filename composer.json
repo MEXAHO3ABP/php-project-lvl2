@@ -1,0 +1,16 @@
+{
+    "name": "hexlet/code",
+    "description": "learning php on hexlet: second project",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MEXAHO3ABP"
+        }
+    ],
+    "require": {}
+}
