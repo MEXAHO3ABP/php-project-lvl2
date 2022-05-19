@@ -5,12 +5,17 @@
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
-        }
+        },
+        "files": [
+            "src/docopt.php"
+        ]
     },
     "authors": [
         {
             "name": "MEXAHO3ABP"
         }
     ],
-    "require": {}
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
 }
