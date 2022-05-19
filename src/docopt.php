@@ -1,3 +1,0 @@
-<?php
-
-namespace hexlet\code;

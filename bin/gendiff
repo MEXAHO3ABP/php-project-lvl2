@@ -15,5 +15,4 @@ Options:
     -v --version    Show version
 DOC;
 
-require ('src/docopt.php');
 $args = Docopt::handle($doc);
