@@ -1,0 +1,25 @@
+# Мой workflow в рамках изучения php практика №1 проект php-project-lvl1
+name: my-check
+# Включается на push
+on: push
+
+jobs:
+  check:
+    # Запускается на:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Клонируем репозиторий в рабочую директорию
+      - uses: actions/checkout@v3
+        # Установка PHP
+      - name: Setup PHP
+        # Сторонний action с php версии 7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+        # Установка composer
+      - name: Install
+        run: make install
+      - name: Run linter
+        # Запускаем линтер
+        run: make lint
