@@ -8,4 +8,4 @@ https://github.com/MEXAHO3ABP/php-project-lvl2
 
 ### Линтер PHP-Codesniffer
 
-[![my-check](https://github.com/MEXAHO3ABP/php-project-lvl2/actions/workflows/linter-php-codesniffer.yml/badge.svg)](https://github.com/MEXAHO3ABP/php-project-lvl2/actions/workflows/linter-php-codesniffer.yml)
+[![my-check](https://github.com/MEXAHO3ABP/php-project-lvl2/actions/workflows/linter-php-codesniffer.yml/badge.svg?branch=main)](https://github.com/MEXAHO3ABP/php-project-lvl2/actions/workflows/linter-php-codesniffer.yml)
