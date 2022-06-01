@@ -3,6 +3,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use function Hexlet\Code\Gendiff\gendiff;
+
 $doc = <<<DOC
 Generate diff
 
@@ -18,3 +20,12 @@ Options:
 DOC;
 
 $args = Docopt::handle($doc);
+
+if ($args['--version'] === true) {
+    echo "version: a 0.0.1";
+    echo "\n";
+    return;
+}
+
+$res1 = gendiff($args['<firstFile>'], $args['<secondFile>']);
+echo $res1."\n";
