@@ -9,6 +9,7 @@ function gendiff($pathToFile1, $pathToFile2)
 {
     $contentFile1 = file_get_contents($pathToFile1);
     $contentFile2 = file_get_contents($pathToFile2);
+
     $json1 = json_decode($contentFile1, true);
     $json2 = json_decode($contentFile2, true);
 
