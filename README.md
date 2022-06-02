@@ -14,6 +14,10 @@ https://github.com/MEXAHO3ABP/php-project-lvl2
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/1f21cab591ba7b709528/maintainability)](https://codeclimate.com/github/MEXAHO3ABP/php-project-lvl2/maintainability)
 
+### Проверка покрытия кода CodeClimat
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1f21cab591ba7b709528/test_coverage)](https://codeclimate.com/github/MEXAHO3ABP/php-project-lvl2/test_coverage)
+
 ### Asciinema для шага 3
 
 [Ссылка для просмотра](https://asciinema.org/a/HkjYGNFQm7jsZimlBMetCcb5m)
