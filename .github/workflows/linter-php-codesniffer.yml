@@ -17,8 +17,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-        # Установка composer
       - name: Install
+        # Установка проекта (зависимостей)
         run: make install
       - name: Run linter
         # Запускаем линтер
@@ -26,3 +26,12 @@ jobs:
       - name: Run test
         # Запускаем тесты
         run: make test
+      - name: Run test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.6.0
+        # Add Code Climate secret key
+        env:
+          CODECLIMATE_ID: ${{secrets.CODECLIMATE_ID}}
+        with:
+          coverageCommand: make test-coverage
+          coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
+          debug: true
