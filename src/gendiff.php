@@ -4,14 +4,12 @@ namespace Hexlet\Code\Gendiff;
 
 use Functional;
 use Hexlet\Code\MyFunctions;
+use Hexlet\Code\Parsers;
 
 function gendiff(string $pathToFile1, string $pathToFile2): string
 {
-    $contentFile1 = file_get_contents($pathToFile1);
-    $contentFile2 = file_get_contents($pathToFile2);
-
-    $json1 = json_decode((string) $contentFile1, true);
-    $json2 = json_decode((string) $contentFile2, true);
+    $json1 = Parsers\parser($pathToFile1);
+    $json2 = Parsers\parser($pathToFile2);
 
     $addedJson1 = MyFunctions\addInArray($json1, $json2);
     $addedJson2 = MyFunctions\addInArray($json2, $json1);

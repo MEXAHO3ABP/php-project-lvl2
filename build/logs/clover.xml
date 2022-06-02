@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1654141316">
-  <project timestamp="1654141316">
+<coverage generated="1654147739">
+  <project timestamp="1654147739">
     <file name="/mnt/d/GitHub/php-project-lvl2/src/gendiff.php">
-      <line num="10" type="stmt" count="1"/>
       <line num="11" type="stmt" count="1"/>
-      <line num="13" type="stmt" count="1"/>
+      <line num="12" type="stmt" count="1"/>
       <line num="14" type="stmt" count="1"/>
-      <line num="16" type="stmt" count="1"/>
+      <line num="15" type="stmt" count="1"/>
       <line num="17" type="stmt" count="1"/>
-      <line num="19" type="stmt" count="1"/>
+      <line num="18" type="stmt" count="1"/>
       <line num="20" type="stmt" count="1"/>
       <line num="22" type="stmt" count="1"/>
+      <line num="23" type="stmt" count="1"/>
       <line num="24" type="stmt" count="1"/>
       <line num="25" type="stmt" count="1"/>
       <line num="26" type="stmt" count="1"/>
       <line num="27" type="stmt" count="1"/>
       <line num="28" type="stmt" count="1"/>
-      <line num="29" type="stmt" count="1"/>
       <line num="30" type="stmt" count="1"/>
-      <line num="32" type="stmt" count="1"/>
-      <line num="33" type="stmt" count="1"/>
+      <line num="31" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="1"/>
       <line num="37" type="stmt" count="1"/>
-      <line num="39" type="stmt" count="1"/>
-      <metrics loc="41" ncloc="41" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="20" coveredelements="20"/>
+      <metrics loc="39" ncloc="39" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="18" elements="18" coveredelements="18"/>
     </file>
     <file name="/mnt/d/GitHub/php-project-lvl2/src/my-functions.php">
       <line num="13" type="stmt" count="1"/>
@@ -39,6 +37,15 @@
       <line num="39" type="stmt" count="1"/>
       <metrics loc="41" ncloc="33" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="12" coveredelements="12"/>
     </file>
-    <metrics files="2" loc="82" ncloc="74" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="32" coveredelements="32"/>
+    <file name="/mnt/d/GitHub/php-project-lvl2/src/parsers.php">
+      <line num="9" type="stmt" count="1"/>
+      <line num="11" type="stmt" count="1"/>
+      <line num="12" type="stmt" count="1"/>
+      <line num="15" type="stmt" count="1"/>
+      <line num="16" type="stmt" count="1"/>
+      <line num="19" type="stmt" count="0"/>
+      <metrics loc="21" ncloc="21" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="5" elements="6" coveredelements="5"/>
+    </file>
+    <metrics files="3" loc="101" ncloc="93" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="35" elements="36" coveredelements="35"/>
   </project>
 </coverage>
