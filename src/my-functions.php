@@ -12,7 +12,7 @@ function addInArray(array $array1, array $array2): array
 {
     foreach ($array2 as $key => $value) {
         if (!array_key_exists($key, $array1)) {
-            $array1[$key] = null;
+            $array1[$key] = '->null<-';
         }
     }
 
@@ -35,6 +35,26 @@ function normalizeValueToString($value): string
     } else {
         $result = $value;
     };
+
+    return $result;
+}
+
+function formater(array $array, string $format): string
+{
+
+    if ($format = 'stylish') {
+        $result = "{\n";
+
+        foreach ($array as $key => $value) {
+            if ($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') {
+                $result .= '  ' . $value['diffType'] . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+            } else {
+                $result .= '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n" . '  ' . '+' . ' ' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+            }
+        }
+
+        $result .= "}";
+    }
 
     return $result;
 }

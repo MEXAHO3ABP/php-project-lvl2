@@ -29,6 +29,8 @@ class gendiffTest extends TestCase
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file3.json'));
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file2.yaml'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file3.yaml'));
+        $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.yaml'));
+        $this->assertEquals($result2, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file3.json'));
         $this->assertEquals('', gendiff('./tests/fixtures/file1.txt', './tests/fixtures/file2.txt'));
     }
 }

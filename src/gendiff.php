@@ -6,7 +6,7 @@ use Functional;
 use Hexlet\Code\MyFunctions;
 use Hexlet\Code\Parsers;
 
-function gendiff(string $pathToFile1, string $pathToFile2): string
+function gendiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
     $json1 = Parsers\parser($pathToFile1);
     $json2 = Parsers\parser($pathToFile2);
@@ -23,22 +23,21 @@ function gendiff(string $pathToFile1, string $pathToFile2): string
     ksort($addedJson1);
     ksort($addedJson2);
 
-    $result = "{\n";
+    $result = [];
 
     foreach ($addedJson1 as $key => $value) {
-        if ($value === null) {
-            $result .= '  ' . '+' . ' ' . $key . ': ' . MyFunctions\normalizeValueToString($addedJson2[$key]) . "\n";
-        } elseif ($addedJson2[$key] === null) {
-            $result .= '  ' . '-' . ' ' . $key . ': ' . MyFunctions\normalizeValueToString($value) . "\n";
+        if ($value === '->null<-') {
+            $result[] = ['diffType' => '+', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($addedJson2[$key])];
+        } elseif ($addedJson2[$key] === '->null<-') {
+            $result[] = ['diffType' => '-', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value)];
         } elseif ($value === $addedJson2[$key]) {
-            $result .= '    ' . $key . ': ' . $value . "\n";
+            $result[] = ['diffType' => ' ', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value)];
         } else {
-            $result .= '  ' . '-' . ' ' . $key . ': ' . MyFunctions\normalizeValueToString($value) . "\n";
-            $result .= '  ' . '+' . ' ' . $key . ': ' . MyFunctions\normalizeValueToString($addedJson2[$key]) . "\n";
+            $result[] = ['diffType' => '-+', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value), 'oldValue' => MyFunctions\normalizeValueToString($addedJson2[$key])];
         }
     }
 
-    $result .= "}";
+    $formatedResult = MyFunctions\formater($result, $format);
 
-    return $result;
+    return $formatedResult;
 }
