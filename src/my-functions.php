@@ -5,9 +5,9 @@ namespace Hexlet\Code\MyFunctions;
 /**
  * @param array<mixed> $array1
  * @param array<mixed> $array2
+ * @param array<mixed> $prefix
  * @return array<mixed> $array1
  */
-
 function addInArray(array $array1, array $array2, array $prefix = []): array
 {
     foreach ($array2 as $key => $value) {
@@ -101,29 +101,40 @@ function normalizeValueToString($value): string
     return $result;
 }
 
+/**
+ * @param array<mixed> $array
+ */
 function formater(array $array, string $format): string
 {
+    $result = '';
+
     if ($array === []) {
-        return '';
-    }
+        $result = '';
+    } else {
+        if ($format === 'stylish') {
+            $result = "{\n";
 
-    if ($format = 'stylish') {
-        $result = "{\n";
-
-        foreach ($array as $key => $value) {
-            if ($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') {
-                $result .= '  ' . $value['diffType'] . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
-            } else {
-                $result .= '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n" . '  ' . '+' . ' ' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+            foreach ($array as $key => $value) {
+                if ($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') {
+                    $result .= '  ' . $value['diffType'] . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+                } else {
+                    $result .= '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+                    $result .= '  ' . '+' . ' ' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+                }
             }
-        }
 
-        $result .= "}";
+            $result .= "}";
+        }
     }
 
     return $result;
 }
 
+/**
+ * @param array<mixed> $array
+ * @param array<mixed> $result
+ * @return array<mixed> $result
+ */
 function recurseKsort(array $array, array $result = []): array
 {
     ksort($array);
@@ -139,6 +150,11 @@ function recurseKsort(array $array, array $result = []): array
     return $result;
 }
 
+/**
+ * @param array<mixed> $array1
+ * @param array<mixed> $array2
+ * @return array<mixed> $result
+ */
 function genGendiff(array $array1, array $array2): array
 {
     $result = [];
@@ -152,7 +168,10 @@ function genGendiff(array $array1, array $array2): array
             } elseif ($value === $array2[$key]) {
                 $result[] = ['diffType' => ' ', 'key' => $key, 'value' => normalizeValueToString($value)];
             } else {
-                $result[] = ['diffType' => '-+', 'key' => $key, 'value' => normalizeValueToString($value), 'oldValue' => normalizeValueToString($array2[$key])];
+                $resPart1 = ['diffType' => '-+', 'key' => $key];
+                $resPart2 = ['value' => normalizeValueToString($value)];
+                $resPart3 = ['oldValue' => normalizeValueToString($array2[$key])];
+                $result[] = $resPart1 + $resPart2 + $resPart3;
             }
         }
     }
