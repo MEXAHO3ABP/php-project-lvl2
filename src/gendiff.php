@@ -19,23 +19,11 @@ function gendiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
 
     $addedJson1 = MyFunctions\addInArray($json1, $json2);
     $addedJson2 = MyFunctions\addInArray($json2, $json1);
+    
+    $sortedJson1 = MyFunctions\recurseKsort($addedJson1);
+    $sortedJson2 = MyFunctions\recurseKsort($addedJson2);
 
-    ksort($addedJson1);
-    ksort($addedJson2);
-
-    $result = [];
-
-    foreach ($addedJson1 as $key => $value) {
-        if ($value === '->null<-') {
-            $result[] = ['diffType' => '+', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($addedJson2[$key])];
-        } elseif ($addedJson2[$key] === '->null<-') {
-            $result[] = ['diffType' => '-', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value)];
-        } elseif ($value === $addedJson2[$key]) {
-            $result[] = ['diffType' => ' ', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value)];
-        } else {
-            $result[] = ['diffType' => '-+', 'key' => $key, 'value' => MyFunctions\normalizeValueToString($value), 'oldValue' => MyFunctions\normalizeValueToString($addedJson2[$key])];
-        }
-    }
+    $result = MyFunctions\genGendiff($sortedJson1, $sortedJson2);
 
     $formatedResult = MyFunctions\formater($result, $format);
 
