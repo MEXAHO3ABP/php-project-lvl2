@@ -11,9 +11,7 @@ namespace Hexlet\Code\MyFunctions;
 function addInArray(array $array1, array $array2, array $prefix = []): array
 {
     foreach ($array2 as $key => $value) {
-              
         if (is_array($value) && !array_is_list($value)) {
-
             $prefix[] = $key;
 
             if (count($prefix) === 1) {
@@ -42,40 +40,40 @@ function addInArray(array $array1, array $array2, array $prefix = []): array
 
             $array1 = addInArray($array1, $value, $prefix);
 
-            array_pop($prefix);            
+            array_pop($prefix);
         } else {
             if (count($prefix) === 0) {
                 if (!array_key_exists($key, $array1)) {
                     $array1[$key] = '->null<-';
-                }                
-            }            
+                }
+            }
             if (count($prefix) === 1) {
                 if (is_array($array1[$prefix[0]])) {
                     if (!array_key_exists($key, $array1[$prefix[0]])) {
-                        $array1[$prefix[0]][$key] = '->null<-';                    
+                        $array1[$prefix[0]][$key] = '->null<-';
                     }
-                }            
+                }
             }
             if (count($prefix) === 2) {
                 if (is_array($array1[$prefix[0]][$prefix[1]])) {
                     if (!array_key_exists($key, $array1[$prefix[0]][$prefix[1]])) {
-                        $array1[$prefix[0]][$prefix[1]][$key] = '->null<-';                    
+                        $array1[$prefix[0]][$prefix[1]][$key] = '->null<-';
                     }
-                }                
+                }
             }
             if (count($prefix) === 3) {
                 if (is_array($array1[$prefix[0]][$prefix[1]][$prefix[2]])) {
                     if (!array_key_exists($key, $array1[$prefix[0]][$prefix[1]][$prefix[2]])) {
-                        $array1[$prefix[0]][$prefix[1]][$prefix[2]][$key] = '->null<-';                    
+                        $array1[$prefix[0]][$prefix[1]][$prefix[2]][$key] = '->null<-';
                     }
-                }                
+                }
             }
             if (count($prefix) === 4) {
                 if (is_array($array1[$prefix[0]][$prefix[1]][$prefix[2]][$prefix[3]])) {
                     if (!array_key_exists($key, $array1[$prefix[0]][$prefix[1]][$prefix[2]][$prefix[3]])) {
-                        $array1[$prefix[0]][$prefix[1]][$prefix[2]][$prefix[3]][$key] = '->null<-';                    
+                        $array1[$prefix[0]][$prefix[1]][$prefix[2]][$prefix[3]][$key] = '->null<-';
                     }
-                }                
+                }
             }
         }
     }
@@ -129,11 +127,11 @@ function formater(array $array, string $format): string
 function recurseKsort(array $array, array $result = []): array
 {
     ksort($array);
-    
+
     foreach ($array as $key => $value) {
         if (!is_array($value)) {
             $result[$key] = $value;
-        } else {            
+        } else {
             $result[$key] = recurseKsort($value);
         }
     }
@@ -146,7 +144,6 @@ function genGendiff(array $array1, array $array2): array
     $result = [];
 
     foreach ($array1 as $key => $value) {
-        
         if (!is_array($value)) {
             if ($value === '->null<-') {
                 $result[] = ['diffType' => '+', 'key' => $key, 'value' => normalizeValueToString($array2[$key])];

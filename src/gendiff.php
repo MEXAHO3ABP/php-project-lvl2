@@ -19,7 +19,7 @@ function gendiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
 
     $addedJson1 = MyFunctions\addInArray($json1, $json2);
     $addedJson2 = MyFunctions\addInArray($json2, $json1);
-    
+
     $sortedJson1 = MyFunctions\recurseKsort($addedJson1);
     $sortedJson2 = MyFunctions\recurseKsort($addedJson2);
 
