@@ -11,7 +11,7 @@ namespace Hexlet\Code\MyFunctions;
 function addInArray(array $array1, array $array2, array $prefix = []): array
 {
     foreach ($array2 as $key => $value) {
-        if (is_array($value) && !array_is_list($value)) {
+        if (is_array($value) /* && !array_is_list($value) */) {
             $prefix[] = $key;
 
             if (count($prefix) === 1) {
@@ -94,6 +94,8 @@ function normalizeValueToString($value): string
         } elseif ($value === false) {
             $result = 'false';
         }
+    } elseif ($value === null) {
+        $result = 'null';
     } else {
         $result = $value;
     };
@@ -113,19 +115,64 @@ function formater(array $array, string $format): string
     } else {
         if ($format === 'stylish') {
             $result = "{\n";
-
-            foreach ($array as $key => $value) {
-                if ($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') {
-                    $result .= '  ' . $value['diffType'] . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
-                } else {
-                    $result .= '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
-                    $result .= '  ' . '+' . ' ' . $value['key'] . ': ' . $value['oldValue'] . "\n";
-                }
-            }
-
+            $result .= stylish($array);
             $result .= "}";
         }
     }
+
+    return $result;
+}
+
+/**
+ * @param array<mixed> $array
+ */
+function stylish(array $array, int $depth = 0, int $flagOnArray = 0, string $result = ''): string
+{    
+    foreach ($array as $key => $value) {
+        if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
+            if (($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') && $flagOnArray === 0) {
+                $result .= str_repeat('  ', $depth + 1) . '  ' . $value['diffType'] . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+            } elseif (($value['diffType'] === '+' || $value['diffType'] === '-' || $value['diffType'] === ' ') && $flagOnArray === 1) {
+                $result .= str_repeat('  ', $depth) . '  ' . ' ' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+            } elseif ($value['diffType'] === '-+') {
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '+' . ' ' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+            } elseif ($value['diffType'] === '-array1') {
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '-' . ' ' . $value['key'] . ': {' . "\n";
+                foreach ($value['oldValue'] as $key2 => $value2) {
+                    $result .= str_repeat('  ', $depth) . '    ' . $key2 . ': ' . $value2 . "\n";
+                }
+                $result .= str_repeat('  ', $depth + 1) . '    }' . "\n";
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '+' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
+            } elseif ($value['diffType'] === '-array2') {
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '-' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+                $result .= str_repeat('  ', $depth + 1) . '  ' . '+' . ' ' . $value['key'] . ': {' . "\n";
+                foreach ($value['value'] as $key3 => $value3) {
+                    $result .= str_repeat('  ', $depth + 1) . '    ' . $key3 . ': ' . $value3 . "\n";
+                }
+                $result .= str_repeat('  ', $depth + 1) . '    }' . "\n";                
+            }
+        } else {
+            $depth += 1;
+
+            $result .= str_repeat('  ', $depth + 1);
+            if (testOnDiffArray($value, '+') && $flagOnArray === 0) {
+                $result .= '+ ';
+                $flagOnArray = 1;
+            } elseif (testOnDiffArray($value, '-') && $flagOnArray === 0) {
+                $result .= '- ';
+                $flagOnArray = 1;
+            } else {
+                $result .= '  ';
+            }
+            $result .= $key . ': {' . "\n";
+            $result .= stylish($value, $depth, $flagOnArray);
+            $flagOnArray = 0;
+
+            $depth -= 1;
+            $result .= str_repeat('  ', $depth) . '    }' . "\n";
+        }
+    }    
 
     return $result;
 }
@@ -155,26 +202,49 @@ function recurseKsort(array $array, array $result = []): array
  * @param array<mixed> $array2
  * @return array<mixed> $result
  */
-function genGendiff(array $array1, array $array2): array
+function genGendiff(array $array1, array $array2, array $result = []): array
 {
-    $result = [];
-
     foreach ($array1 as $key => $value) {
-        if (!is_array($value)) {
+        if (!is_array($value) && !is_array($array2[$key])) {
             if ($value === '->null<-') {
-                $result[] = ['diffType' => '+', 'key' => $key, 'value' => normalizeValueToString($array2[$key])];
+                $result[$key] = ['itsGendiff' => '->yes<-','diffType' => '+', 'key' => $key, 'value' => normalizeValueToString($array2[$key])];
             } elseif ($array2[$key] === '->null<-') {
-                $result[] = ['diffType' => '-', 'key' => $key, 'value' => normalizeValueToString($value)];
+                $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => '-', 'key' => $key, 'value' => normalizeValueToString($value)];
             } elseif ($value === $array2[$key]) {
-                $result[] = ['diffType' => ' ', 'key' => $key, 'value' => normalizeValueToString($value)];
+                $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => ' ', 'key' => $key, 'value' => normalizeValueToString($value)];
             } else {
-                $resPart1 = ['diffType' => '-+', 'key' => $key];
+                $resPart1 = ['itsGendiff' => '->yes<-', 'diffType' => '-+', 'key' => $key];
                 $resPart2 = ['value' => normalizeValueToString($value)];
                 $resPart3 = ['oldValue' => normalizeValueToString($array2[$key])];
-                $result[] = $resPart1 + $resPart2 + $resPart3;
+                $result[$key] = $resPart1 + $resPart2 + $resPart3;
             }
+        } elseif (is_array($value) && is_array($array2[$key])) {
+            $result[$key] = genGendiff($value, $array2[$key]);
+        } elseif (is_array($value) && !is_array($array2[$key])) {
+            $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => '-array1', 'key' => $key, 'value' => $array2[$key], 'oldValue' => $value];
+        } elseif (!is_array($value) && is_array($array2[$key])) {
+            $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => '-array2', 'key' => $key, 'value' => $value, 'oldValue' => $array2[$key]];
         }
     }
 
     return $result;
+}
+
+/**
+ * @param array<mixed> $array
+ */
+
+function testOnDiffArray(array $array, string $test): bool
+{
+    foreach ($array as $key => $value) {
+        if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
+            if ($value['diffType'] <> $test) {
+                return false;
+            }           
+        } else {
+            testOnDiffArray($value, $test);            
+        }      
+    }
+
+    return true;
 }

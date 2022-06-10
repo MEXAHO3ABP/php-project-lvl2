@@ -13,9 +13,9 @@ function parser(string $pathToFile): array
     $empty = [];
 
     if (strpos($pathToFile, '.json') <> false) {
-        return json_decode((string) $contentFile, true);
+        return json_decode($contentFile, true);
     } elseif (strpos($pathToFile, '.yaml') <> false || strpos($pathToFile, '.yml') <> false) {
-        return (array) Yaml::parse((string) $contentFile, Yaml::PARSE_OBJECT_FOR_MAP);
+        return Yaml::parseFile($pathToFile);
     } else {
         return $empty;
     }
