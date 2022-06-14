@@ -18,12 +18,14 @@ Options:
     -v --version    Show version
     --format <fmt>  Report format [default: stylish]
 DOC;
-
+/** подключаем docopt */
 $args = Docopt::handle($doc);
 
+/** выдаем версию из файла version */
 if ($args['--version'] === true) {
-    echo "version: a 0.0.1";
-    echo "\n";
+    $version = file_get_contents('version.txt');
+    echo "version: {$version}\n";
+    
     return;
 }
 

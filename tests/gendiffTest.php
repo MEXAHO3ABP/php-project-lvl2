@@ -9,22 +9,10 @@ class gendiffTest extends TestCase
 {
     public function testGendiff(): void
     {
-    $result1 = "{\n" .
-        "  - follow: false\n" .
-        "    host: hexlet.io\n" .
-        "  - proxy: 123.234.53.22\n" .
-        "  - timeout: 50\n" .
-        "  + timeout: 20\n" .
-        "  + verbose: true\n" . '}';
-    $result2 = "{\n" .
-        "  + abergemaht: false\n" .
-        "  - follow: false\n" .
-        "    host: hexlet.io\n" .
-        "  - proxy: 123.234.53.22\n" .
-        "  + rust: 12\n" .
-        "  - timeout: 50\n" .
-        "  + timeout: 20\n" .
-        "  + verbose: true\n" . '}';
+        $result1 = file_get_contents('tests/fixtures/result1.txt');
+        $result2 = file_get_contents('tests/fixtures/result2.txt');
+        $result3 = file_get_contents('tests/fixtures/result3.txt');
+    
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.json'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file3.json'));
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file2.yaml'));
@@ -32,5 +20,7 @@ class gendiffTest extends TestCase
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.yaml'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file3.json'));
         $this->assertEquals('', gendiff('./tests/fixtures/file1.txt', './tests/fixtures/file2.txt'));
+        $this->assertEquals('', gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.txt'));
+        $this->assertEquals($result3, gendiff('./tests/fixtures/file4.yaml', './tests/fixtures/file5.json'));
     }
 }

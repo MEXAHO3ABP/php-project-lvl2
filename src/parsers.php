@@ -9,8 +9,8 @@ use Symfony\Component\Yaml\Yaml;
  */
 function parser(string $pathToFile): array
 {
-    $contentFile = file_get_contents($pathToFile);
     $empty = [];
+    $contentFile = (string) file_get_contents($pathToFile);
 
     if (strpos($pathToFile, '.json') <> false) {
         return json_decode($contentFile, true);
