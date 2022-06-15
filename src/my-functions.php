@@ -130,7 +130,15 @@ function normalizeValueToString($value): string
  */
 function recurseKsort(array $array, array $result = []): array
 {
-    ksort($array);
+    $keys = array_keys($array);
+    sort($keys);
+    $sortedArray = [];
+
+    foreach ($keys as $key) {
+        $sortedArray[$key] = $array[$key];
+    }
+
+    $array = $sortedArray;
 
     foreach ($array as $key => $value) {
         if (!is_array($value)) {
@@ -250,3 +258,9 @@ function testOnTrueFalseNull($value): string
         return "'";
     }
 }
+
+/**
+ * @param array<mixed> $array
+ *
+ * Функция меняет местами ключи key1 и key2
+ */
