@@ -6,6 +6,8 @@ use Functional;
 use Hexlet\Code\MyFunctions;
 use Hexlet\Code\Parsers;
 
+use function Hexlet\Code\Formatters\formater;
+
 function gendiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
     /** получаем массивы из входных файлов */
@@ -31,9 +33,12 @@ function gendiff(string $pathToFile1, string $pathToFile2, string $format = 'sty
     /** генерируем дифф (разницу между массивами) */
     $result = MyFunctions\genGendiff($sortedJson1, $sortedJson2);
 
+    /** Ниже строка для проверки диффа */
+    /* print_r($result); */
+
     /** форматируем результат для вывода на экран по заданному правилу */
     /** по умолчанию задано правило stylish */
-    $formatedResult = MyFunctions\formater($result, $format);
+    $formatedResult = formater($result, $format);
 
     return $formatedResult;
 }

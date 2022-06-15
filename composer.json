@@ -9,7 +9,10 @@
         "files": [
             "src/gendiff.php",
             "src/my-functions.php",
-            "src/parsers.php"
+            "src/parsers.php",
+            "src/formatters.php",
+            "src/Formatters/stylish.php",
+            "src/Formatters/plain.php"
         ]
     },
     "authors": [
