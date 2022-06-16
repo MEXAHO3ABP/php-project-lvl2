@@ -13,6 +13,7 @@ class gendiffTest extends TestCase
         $result2 = file_get_contents('tests/fixtures/result2.txt');
         $result3 = file_get_contents('tests/fixtures/result3.txt');
         $result4 = file_get_contents('tests/fixtures/result4.txt');
+        $result5 = file_get_contents('tests/fixtures/result5.txt');
     
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.json'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file3.json'));
@@ -24,5 +25,6 @@ class gendiffTest extends TestCase
         $this->assertEquals('', gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.txt'));
         $this->assertEquals($result3, gendiff('./tests/fixtures/file4.yaml', './tests/fixtures/file5.json'));
         $this->assertEquals($result4, gendiff('./tests/fixtures/file4.yaml', './tests/fixtures/file5.json', 'plain'));
+        $this->assertEquals($result5, gendiff('./tests/fixtures/file4.json', './tests/fixtures/file5.yaml', 'json'));
     }
 }

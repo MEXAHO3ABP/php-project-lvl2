@@ -13,9 +13,11 @@ function parser(string $pathToFile): array
     $contentFile = (string) file_get_contents($pathToFile);
 
     if (strpos($pathToFile, '.json') <> false) {
-        return json_decode($contentFile, true);
+        $json = json_decode($contentFile, true);
+        return $json;
     } elseif (strpos($pathToFile, '.yaml') <> false || strpos($pathToFile, '.yml') <> false) {
-        return Yaml::parseFile($pathToFile);
+        $yaml = Yaml::parseFile($pathToFile);
+        return $yaml;
     } else {
         return $empty;
     }

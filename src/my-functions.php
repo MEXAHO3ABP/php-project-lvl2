@@ -130,8 +130,11 @@ function normalizeValueToString($value): string
  */
 function recurseKsort(array $array, array $result = []): array
 {
+    /** Получаем список всех ключей массива */
     $keys = array_keys($array);
+    /** Сортируем их */
     sort($keys);
+
     $sortedArray = [];
 
     foreach ($keys as $key) {
@@ -246,21 +249,40 @@ function testOnDiffArray(array $array, string $test): bool
 /**
  * @param mixed $value
  *
- * Функция возвращает символ одинарной кавычки, если переданное значение не равно
- * (string) true, false или null
+ * Функция возвращает переданную функции строку, если переданное значение не равно
+ * (string) true, false, null или не является числом
  */
 
-function testOnTrueFalseNull($value): string
+function testOnTrueFalseNull($value, string $str): string
 {
-    if ($value === 'true' || $value === 'false' || $value === 'null') {
+    if ($value === 'true' || $value === 'false' || $value === 'null' || is_numeric($value)) {
         return '';
     } else {
-        return "'";
+        return $str;
     }
 }
 
 /**
  * @param array<mixed> $array
+ * @param array<mixed> $prevArray
  *
- * Функция меняет местами ключи key1 и key2
+ * Функция возвращает переданную строку, если элемент переданного
+ * массива не последний
  */
+
+function testLastOnArray(array $array, array $prevArray, string $testKey, string $str): string
+{
+    if ($prevArray === []) {
+        end($array);
+        $lastKey = key($array);
+    } else {
+        end($prevArray);
+        $lastKey = key($prevArray);
+    }
+
+    if ($testKey === $lastKey) {
+        return '';
+    } else {
+        return $str;
+    }
+}

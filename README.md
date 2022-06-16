@@ -33,3 +33,7 @@ https://github.com/MEXAHO3ABP/php-project-lvl2
 ### Asciinema для шага 7
 
 [https://asciinema.org/a/z68uph3v5jrg44HH5nNUpka7U]https://asciinema.org/a/z68uph3v5jrg44HH5nNUpka7U
+
+### Asciinema для шага 8
+
+[https://asciinema.org/a/fZDXFMFsEqHDjsZ8gGJ4FvIpO]https://asciinema.org/a/fZDXFMFsEqHDjsZ8gGJ4FvIpO

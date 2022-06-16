@@ -29,9 +29,9 @@ function plain(array $array, int $depth = 0, int $flagOnArray = 0, array $prefix
                 /** Формируем строку диффа для случая + (added) */
                 if ($value['diffType'] === '+') {
                     $result .= 'Property ' . "'" . implode('.', $prefix) . '.' . $key . "'" . " was added with value: ";
-                    $result .= testOnTrueFalseNull($value['value']);
+                    $result .= testOnTrueFalseNull($value['value'], "'");
                     $result .= $value['value'];
-                    $result .= testOnTrueFalseNull($value['value']);
+                    $result .= testOnTrueFalseNull($value['value'], "'");
                     $result .= "\n";
                 }
                 /** Формируем строку диффа для случая - (removed) */
@@ -41,13 +41,13 @@ function plain(array $array, int $depth = 0, int $flagOnArray = 0, array $prefix
                 /** Формируем строку диффа для случая -+ (updated) */
                 if ($value['diffType'] === '-+') {
                     $result .= 'Property ' . "'" . implode('.', $prefix) . '.' . $key . "'" . " was updated. From ";
-                    $result .= testOnTrueFalseNull($value['value']);
+                    $result .= testOnTrueFalseNull($value['value'], "'");
                     $result .= $value['value'];
-                    $result .= testOnTrueFalseNull($value['value']);
+                    $result .= testOnTrueFalseNull($value['value'], "'");
                     $result .= ' to ';
-                    $result .= testOnTrueFalseNull($value['oldValue']);
+                    $result .= testOnTrueFalseNull($value['oldValue'], "'");
                     $result .= $value['oldValue'];
-                    $result .= testOnTrueFalseNull($value['oldValue']);
+                    $result .= testOnTrueFalseNull($value['oldValue'], "'");
                     $result .= "\n";
                 }
             }
@@ -55,17 +55,17 @@ function plain(array $array, int $depth = 0, int $flagOnArray = 0, array $prefix
             if ($value['diffType'] === '-array1') {
                 $result .= 'Property ' . "'" . implode('.', $prefix) . '.';
                 $result .= $key . "'" . " was updated. From [complex value] to ";
-                $result .= testOnTrueFalseNull($value['value']);
+                $result .= testOnTrueFalseNull($value['value'], "'");
                 $result .= $value['value'];
-                $result .= testOnTrueFalseNull($value['value']);
+                $result .= testOnTrueFalseNull($value['value'], "'");
                 $result .= "\n";
             }
             /** Если diffType = -array2, то запись была заменена на массив */
             if ($value['diffType'] === '-array2') {
                 $result .= 'Property ' . "'" . implode('.', $prefix) . '.' . $key . "'" . " was updated. From ";
-                $result .= testOnTrueFalseNull($value['oldValue']);
+                $result .= testOnTrueFalseNull($value['oldValue'], "'");
                 $result .= $value['oldValue'];
-                $result .= testOnTrueFalseNull($value['oldValue']);
+                $result .= testOnTrueFalseNull($value['oldValue'], "'");
                 $result .= " to [complex value]" . "\n";
             }
 

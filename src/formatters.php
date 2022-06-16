@@ -4,6 +4,7 @@ namespace Hexlet\Code\Formatters;
 
 use function Hexlet\Code\Formatters\Stylish\stylish;
 use function Hexlet\Code\Formatters\Plain\plain;
+use function Hexlet\Code\Formatters\Json\json;
 
 /**
  * @param array<mixed> $array
@@ -20,9 +21,15 @@ function formater(array $array, string $format): string
         if ($format === 'stylish') {
             $result = "{\n";
             $result .= stylish($array);
-            $result .= "}";
+            $result .= "}\n";
         } elseif ($format === 'plain') {
             $result = plain($array);
+        } elseif ($format === 'json') {
+            $result = "{\n";
+            $result .= json($array);
+            $result .= "}\n";
+        } else {
+            $result = "{$format}: unknown format";
         }
     }
 
