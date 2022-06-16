@@ -1,5 +1,5 @@
 # Мой workflow в рамках изучения php практика №1 проект php-project-lvl1
-name: my-check
+name: hexlet-check
 # Включается на push
 on: push
 
