@@ -20,7 +20,7 @@ function addInArray(array $array1, array $array2, array $prefix = []): array
 {
     foreach ($array2 as $key => $value) {
         /** Проверяем каждое значение первого уровня массива на массив и ассоциативный (не простой) массив */
-        if (is_array($value) && !array_is_list($value)) {
+        if (is_array($value) /* && !array_is_list($value) */) {
             /** Формируем префикс - простой массив с ключами массивов для рекурсивной ветки */
             $prefix[] = $key;
 
