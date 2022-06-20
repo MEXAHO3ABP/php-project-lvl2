@@ -1,6 +1,6 @@
 <?php
 
-namespace Hexlet\Code\Gendiff;
+namespace Differ\Differ;
 
 use Functional;
 use Hexlet\Code\MyFunctions;
