@@ -29,57 +29,70 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
         if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
             /** Формируется строка диффа для случаев +, -, =, -array1, -array2 и -+ */
             if (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 0) {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . $value['diffType']);                
-                $result = mergedStrings($result, ' ' . $value['key'] . "\": " . testOnTrueFalseNull($value['value'], "\""));
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"");
+                $result = mergedStrings($result, $value['diffType']);
+                $result = mergedStrings($result, ' ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, $value['value'] . testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '=' && $flagOnArray === 0) {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '~ ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '~ ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             /** если дифф лежит внутри массива, который целиком является диффом, то строка диффа не содержит знаков + или - */
             } elseif (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 1) {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '  ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '  ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '=' && $flagOnArray === 1) {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '~ ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '~ ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '-+') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, ",\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['oldValue'], "\"") . $value['oldValue']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['oldValue'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '-array1') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ' . $value['key'] . "\"" . ': {' . "\n");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
+                $result = mergedStrings($result, $value['key'] . "\"" . ': {' . "\n");
                 foreach ($value['oldValue'] as $key2 => $value2) {
-                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . $abzac . "\"" . '  ' . $key2 . "\": ");
+                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . $abzac . "\"" . '  ');
+                    $result = mergedStrings($result, $key2 . "\": ");
                     $result = mergedStrings($result, testOnTrueFalseNull($value2, "\"") . $value2);
                     $result = mergedStrings($result, testOnTrueFalseNull($value2, "\""));
                     $result = mergedStrings($result, testLastOnArray($value, $value['oldValue'], $key2, ',') . "\n");
                 }
                 $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . '}');
                 $result = mergedStrings($result, testLastOnArray($prevArray, $value, $value['key'], ',') . "\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '-array2') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ' . $value['key'] . "\": ");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
+                $result = mergedStrings($result, $value['key'] . "\": ");
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
                 $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
                 $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\"" . ': {' . "\n");
+                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
+                $result = mergedStrings($result, $value['key'] . "\"" . ': {' . "\n");
                 foreach ($value['oldValue'] as $key3 => $value3) {
-                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . '  ' . "\"" . '  ' . $key3 . "\": ");
+                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . '  ' . "\"");
+                    $result = mergedStrings($result, '  ' . $key3 . "\": ");
                     $result = mergedStrings($result, testOnTrueFalseNull($value3, "\"") . $value3);
                     $result = mergedStrings($result, testOnTrueFalseNull($value3, "\""));
                     $result = mergedStrings($result, testLastOnArray($value, $value['oldValue'], $key3, ',') . "\n");
@@ -120,6 +133,6 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
             $result = mergedStrings($result, testLastOnArray($array, $array, $key, ',') . "\n");
         }
     }
-    
+
     return $result;
 }

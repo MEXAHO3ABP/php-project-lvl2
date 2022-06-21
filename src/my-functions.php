@@ -291,7 +291,7 @@ function testLastOnArray(array $array, array $prevArray, string $testKey, string
  * Функция соединяет переданные строки
  */
 
-function mergedStrings(string $string1, string $string2)
+function mergedStrings(string $string1, string $string2): string
 {
     return $string1 . $string2;
 }
