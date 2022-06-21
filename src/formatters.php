@@ -21,13 +21,14 @@ function formater(array $array, string $format): string
         if ($format === 'stylish') {
             $result = "{\n";
             $result .= stylish($array);
-            $result .= "}\n";
+            $result .= "}";
         } elseif ($format === 'plain') {
             $result = plain($array);
+            $result = substr_replace($result, '', -1);
         } elseif ($format === 'json') {
             $result = "{\n";
             $result .= json($array);
-            $result .= "}\n";
+            $result .= "}";
         } else {
             $result = "{$format}: unknown format";
         }
