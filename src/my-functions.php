@@ -286,3 +286,12 @@ function testLastOnArray(array $array, array $prevArray, string $testKey, string
         return $str;
     }
 }
+
+/**
+ * Функция соединяет переданные строки
+ */
+
+function mergedStrings(string $string1, string $string2)
+{
+    return $string1 . $string2;
+}
