@@ -3,9 +3,10 @@
 namespace Hexlet\Code\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\gendiff;
 
-class gendiffTest extends TestCase
+class genDiffTest extends TestCase
 {
     public function testGendiff(): void
     {
@@ -17,7 +18,7 @@ class gendiffTest extends TestCase
         $result6 = file_get_contents('tests/fixtures/result.stylish');
         $result7 = file_get_contents('tests/fixtures/result.plain');
         $result8 = file_get_contents('tests/fixtures/result.json');
-    
+
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.json'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file3.json'));
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.yaml', './tests/fixtures/file2.yaml'));
