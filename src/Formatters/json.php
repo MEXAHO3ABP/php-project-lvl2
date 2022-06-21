@@ -29,12 +29,11 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
         if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
             /** Формируется строка диффа для случаев +, -, =, -array1, -array2 и -+ */
             if (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 0) {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"");
-                $result = mergedStrings($result, $value['diffType']);
-                $result = mergedStrings($result, ' ' . $value['key'] . "\": ");
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
-                $result = mergedStrings($result, $value['value'] . testOnTrueFalseNull($value['value'], "\""));
-                $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
+                $result1 = str_repeat($abzac, $depth) . $abzac . "\"" . $value['diffType'] . ' ';
+                $result2 = $value['key'] . "\": " . testOnTrueFalseNull($value['value'], "\"");
+                $result3 = $value['value'] . testOnTrueFalseNull($value['value'], "\"");
+                $result4 = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
+                $result .= $result1 . $result2 . $result3 . $result4;
             } elseif ($value['diffType'] === '=' && $flagOnArray === 0) {
                 $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '~ ');
                 $result = mergedStrings($result, $value['key'] . "\": ");
