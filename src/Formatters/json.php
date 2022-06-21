@@ -80,7 +80,7 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
                     $result .= str_repeat($abzac, $depth + 2) . '  ' . "\"" . '  ' . $key3 . "\": ";
                     $result .= testOnTrueFalseNull($value3, "\"") . $value3;
                     $result .= testOnTrueFalseNull($value3, "\"");
-                    $result .= testLastOnArray($value, $value['value'], $key3, ',') . "\n";
+                    $result .= testLastOnArray($value, $value['oldValue'], $key3, ',') . "\n";
                 }
                 $result .= str_repeat($abzac, $depth) . $abzac . '}' . "\n";
             }
