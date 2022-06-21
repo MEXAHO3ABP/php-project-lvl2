@@ -72,7 +72,7 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
                 $result .= testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
             } elseif ($value['diffType'] === '-array2') {
                 $result .= str_repeat($abzac, $depth) . $abzac . "\"" . '- ' . $value['key'] . "\": ";
-                $result .= testOnTrueFalseNull($value['value'], "\"") . $value['oldValue'];
+                $result .= testOnTrueFalseNull($value['value'], "\"") . $value['value'];
                 $result .= testOnTrueFalseNull($value['value'], "\"");
                 $result .= testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
                 $result .= str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\"" . ': {' . "\n";

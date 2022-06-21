@@ -82,6 +82,6 @@ function stylish(array $array, int $depth = 0, int $flagOnArray = 0, string $res
             /** завершаем вывод диффа массива закрывающей скобкой */
         }
     }
-   
+
     return $result;
 }
