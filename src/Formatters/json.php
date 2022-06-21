@@ -29,10 +29,10 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
         if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
             /** Формируется строка диффа для случаев +, -, =, -array1, -array2 и -+ */
             if (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 0) {
-                $promRes[] = str_repeat($abzac, $depth) . $abzac . "\"" . $value['diffType'];
-                $promRes[] = ' ' . $value['key'] . "\": " . testOnTrueFalseNull($value['value'], "\"");
-                $promRes[] = $value['value'] . testOnTrueFalseNull($value['value'], "\"");
-                $promRes[] = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
+                array_push($promRes, str_repeat($abzac, $depth) . $abzac . "\"" . $value['diffType']);
+                array_push($promRes, ' ' . $value['key'] . "\": " . testOnTrueFalseNull($value['value'], "\""));
+                array_push($promRes, $value['value'] . testOnTrueFalseNull($value['value'], "\""));
+                array_push($promRes, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
             } elseif ($value['diffType'] === '=' && $flagOnArray === 0) {
                 $promRes[] = str_repeat($abzac, $depth) . $abzac . "\"" . '~ ' . $value['key'] . "\": ";
                 $promRes[] = testOnTrueFalseNull($value['value'], "\"") . $value['value'];
