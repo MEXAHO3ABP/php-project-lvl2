@@ -14,6 +14,8 @@ class gendiffTest extends TestCase
         $result3 = file_get_contents('tests/fixtures/result3.txt');
         $result4 = file_get_contents('tests/fixtures/result4.txt');
         $result5 = file_get_contents('tests/fixtures/result5.txt');
+        $result6 = file_get_contents('tests/fixtures/result.stylish');
+        $result7 = file_get_contents('tests/fixtures/result.plain');
     
         $this->assertEquals($result1, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file2.json'));
         $this->assertEquals($result2, gendiff('./tests/fixtures/file1.json', './tests/fixtures/file3.json'));
@@ -26,5 +28,7 @@ class gendiffTest extends TestCase
         $this->assertEquals($result3, gendiff('./tests/fixtures/file4.yaml', './tests/fixtures/file5.json'));
         $this->assertEquals($result4, gendiff('./tests/fixtures/file4.yaml', './tests/fixtures/file5.json', 'plain'));
         $this->assertEquals($result5, gendiff('./tests/fixtures/file4.json', './tests/fixtures/file5.yaml', 'json'));
+        $this->assertEquals($result6, gendiff('./tests/fixtures/file6.json', './tests/fixtures/file7.yaml', 'stylish'));
+        $this->assertEquals($result7, gendiff('./tests/fixtures/file6.json', './tests/fixtures/file7.yaml', 'plain'));
     }
 }

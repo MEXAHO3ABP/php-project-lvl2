@@ -63,9 +63,9 @@ function plain(array $array, int $depth = 0, int $flagOnArray = 0, array $prefix
             /** Если diffType = -array2, то запись была заменена на массив */
             if ($value['diffType'] === '-array2') {
                 $result .= 'Property ' . "'" . implode('.', $prefix) . '.' . $key . "'" . " was updated. From ";
-                $result .= testOnTrueFalseNull($value['oldValue'], "'");
-                $result .= $value['oldValue'];
-                $result .= testOnTrueFalseNull($value['oldValue'], "'");
+                $result .= testOnTrueFalseNull($value['value'], "'");
+                $result .= $value['value'];
+                $result .= testOnTrueFalseNull($value['value'], "'");
                 $result .= " to [complex value]" . "\n";
             }
 

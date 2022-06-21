@@ -211,13 +211,13 @@ function genGendiff(array $array1, array $array2, array $result = []): array
         /** из array1 и появления новой записи (+) в array2 */
         } elseif (is_array($value) && !is_array($array2[$key])) {
             $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => '-array1', 'key' => $key];
-            $result[$key]['value'] = $array2[$key];
+            $result[$key]['value'] = normalizeValueToString($array2[$key]);
             $result[$key]['oldValue'] = $value;
         /** если запись в array2 это массив, а запись в array1 это не массив, то вариант появления новой записи (+) в array2 */
         /** и удаления (-) массива со значениями из array1  */
         } elseif (!is_array($value) && is_array($array2[$key])) {
             $result[$key] = ['itsGendiff' => '->yes<-', 'diffType' => '-array2', 'key' => $key];
-            $result[$key]['value'] = $value;
+            $result[$key]['value'] = normalizeValueToString($value);
             $result[$key]['oldValue'] = $array2[$key];
         }
     }

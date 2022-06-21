@@ -43,9 +43,9 @@ function stylish(array $array, int $depth = 0, int $flagOnArray = 0, string $res
                 $result .= str_repeat('  ', $depth) . '    }' . "\n";
                 $result .= str_repeat('  ', $depth) . '  ' . '+' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
             } elseif ($value['diffType'] === '-array2') {
-                $result .= str_repeat('  ', $depth) . '  ' . '-' . $value['key'] . ': ' . $value['oldValue'] . "\n";
+                $result .= str_repeat('  ', $depth) . '  ' . '-' . ' ' . $value['key'] . ': ' . $value['value'] . "\n";
                 $result .= str_repeat('  ', $depth) . '  ' . '+' . ' ' . $value['key'] . ': {' . "\n";
-                foreach ($value['value'] as $key3 => $value3) {
+                foreach ($value['oldValue'] as $key3 => $value3) {
                     $result .= str_repeat('  ', $depth + 2) . '    ' . $key3 . ': ' . $value3 . "\n";
                 }
                 $result .= str_repeat('  ', $depth) . '    }' . "\n";
