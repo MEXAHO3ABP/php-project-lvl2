@@ -9,7 +9,6 @@ use function Hexlet\Code\MyFunctions\testLastOnArray;
 /**
  * @param array<mixed> $array
  * @param array<mixed> $prevArray
- * @param array<mixed> $result
  *
  * Функция реализует рекурсивный метод для форматирования вывода диффа типа json:
  * {
@@ -18,11 +17,11 @@ use function Hexlet\Code\MyFunctions\testLastOnArray;
  *   "+ timeout": 20
  * }
  */
-function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArray = [], array $result = []): string
+function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArray = []): string
 {
     $abzac = '    ';
 
-    $promRes = $result;
+    $promRes = [];
 
     foreach ($array as $key => $value) {
         /** Каждое значение первого уровня массива диффов проверяем на отнесение к массиву диффов, */
