@@ -76,7 +76,7 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
                 $result .= testOnTrueFalseNull($value['value'], "\"");
                 $result .= testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
                 $result .= str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\"" . ': {' . "\n";
-                foreach ($value['value'] as $key3 => $value3) {
+                foreach ($value['oldValue'] as $key3 => $value3) {
                     $result .= str_repeat($abzac, $depth + 2) . '  ' . "\"" . '  ' . $key3 . "\": ";
                     $result .= testOnTrueFalseNull($value3, "\"") . $value3;
                     $result .= testOnTrueFalseNull($value3, "\"");
