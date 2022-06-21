@@ -53,8 +53,8 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
                 $result .= testOnTrueFalseNull($value['value'], "\"");
                 $result .= ",\n";
                 $result .= str_repeat($abzac, $depth) . $abzac . "\"" . '+ ' . $value['key'] . "\": ";
-                $result .= testOnTrueFalseNull($value['value'], "\"") . $value['oldValue'];
-                $result .= testOnTrueFalseNull($value['value'], "\"");
+                $result .= testOnTrueFalseNull($value['oldValue'], "\"") . $value['oldValue'];
+                $result .= testOnTrueFalseNull($value['oldValue'], "\"");
                 $result .= testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
             } elseif ($value['diffType'] === '-array1') {
                 $result .= str_repeat($abzac, $depth) . $abzac . "\"" . '- ' . $value['key'] . "\"" . ': {' . "\n";
@@ -82,7 +82,7 @@ function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArr
                     $result .= testOnTrueFalseNull($value3, "\"");
                     $result .= testLastOnArray($value, $value['oldValue'], $key3, ',') . "\n";
                 }
-                $result .= str_repeat($abzac, $depth) . $abzac . '}' . "\n";
+                $result .= str_repeat($abzac, $depth) . $abzac . '},' . "\n";
             }
         } else {
             /** Для каждого массива, не являющегося диффом формируется (увеличивается для каждого вызова функции на 1) */
