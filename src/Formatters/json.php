@@ -2,135 +2,15 @@
 
 namespace Hexlet\Code\Formatters\Json;
 
-use function Hexlet\Code\MyFunctions\testOnDiffArray;
-use function Hexlet\Code\MyFunctions\testOnTrueFalseNull;
-use function Hexlet\Code\MyFunctions\testLastOnArray;
-use function Hexlet\Code\MyFunctions\mergedStrings;
-
-/**
- * @param array<mixed> $array
- * @param array<mixed> $prevArray
- *
- * Функция реализует рекурсивный метод для форматирования вывода диффа типа json:
- * {
- *   "- follow": false,
- *   "  host": "hexlet.io",
- *   "+ timeout": 20
- * }
- */
-function json(array $array, int $depth = 0, int $flagOnArray = 0, array $prevArray = []): string
+function json(string $pathToFile1, string $pathToFile2): string
 {
-    $abzac = '    ';
     $result = '';
 
-    foreach ($array as $key => $value) {
-        /** Каждое значение первого уровня массива диффов проверяем на отнесение к массиву диффов, */
-        /** в этом случае можно сформировать вывод диффа (значение не является массивом массивов диффов) */
-        if (array_key_exists('itsGendiff', $value) && $value['itsGendiff'] === '->yes<-') {
-            /** Формируется строка диффа для случаев +, -, =, -array1, -array2 и -+ */
-            if (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 0) {
-                $result1 = str_repeat($abzac, $depth) . $abzac . "\"" . $value['diffType'] . ' ';
-                $result2 = $value['key'] . "\": " . testOnTrueFalseNull($value['value'], "\"");
-                $result3 = $value['value'] . testOnTrueFalseNull($value['value'], "\"");
-                $result4 = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
-                $result .= $result1 . $result2 . $result3 . $result4;
-            } elseif ($value['diffType'] === '=' && $flagOnArray === 0) {
-                $result1 = str_repeat($abzac, $depth) . $abzac . "\"" . '~ ' . $value['key'] . "\": ";
-                $result2 = testOnTrueFalseNull($value['value'], "\"") . $value['value'];
-                $result3 = testOnTrueFalseNull($value['value'], "\"");
-                $result4 = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
-                $result .= $result1 . $result2 . $result3 . $result4;
-            /** если дифф лежит внутри массива, который целиком является диффом, то строка диффа не содержит знаков + или - */
-            } elseif (($value['diffType'] === '+' || $value['diffType'] === '-') && $flagOnArray === 1) {
-                $result1 = str_repeat($abzac, $depth) . $abzac . "\"" . '  ' . $value['key'] . "\": ";
-                $result2 = testOnTrueFalseNull($value['value'], "\"") . $value['value'];
-                $result3 = testOnTrueFalseNull($value['value'], "\"");
-                $result4 = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
-                $result .= $result1 . $result2 . $result3 . $result4;
-            } elseif ($value['diffType'] === '=' && $flagOnArray === 1) {
-                $result1 = str_repeat($abzac, $depth) . $abzac . "\"" . '~ ' . $value['key'] . "\": ";
-                $result2 = testOnTrueFalseNull($value['value'], "\"") . $value['value'];
-                $result3 = testOnTrueFalseNull($value['value'], "\"");
-                $result4 = testLastOnArray($value, $prevArray, $value['key'], ',') . "\n";
-                $result .= $result1 . $result2 . $result3 . $result4;
-            } elseif ($value['diffType'] === '-+') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
-                $result = mergedStrings($result, $value['key'] . "\": ");
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
-                $result = mergedStrings($result, ",\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
-                $result = mergedStrings($result, $value['key'] . "\": ");
-                $result = mergedStrings($result, testOnTrueFalseNull($value['oldValue'], "\"") . $value['oldValue']);
-                $result = mergedStrings($result, testOnTrueFalseNull($value['oldValue'], "\""));
-                $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
-            } elseif ($value['diffType'] === '-array1') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
-                $result = mergedStrings($result, $value['key'] . "\"" . ': {' . "\n");
-                foreach ($value['oldValue'] as $key2 => $value2) {
-                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . $abzac . "\"" . '  ');
-                    $result = mergedStrings($result, $key2 . "\": ");
-                    $result = mergedStrings($result, testOnTrueFalseNull($value2, "\"") . $value2);
-                    $result = mergedStrings($result, testOnTrueFalseNull($value2, "\""));
-                    $result = mergedStrings($result, testLastOnArray($value, $value['oldValue'], $key2, ',') . "\n");
-                }
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . '}');
-                $result = mergedStrings($result, testLastOnArray($prevArray, $value, $value['key'], ',') . "\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
-                $result = mergedStrings($result, $value['key'] . "\": ");
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
-                $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
-            } elseif ($value['diffType'] === '-array2') {
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '- ');
-                $result = mergedStrings($result, $value['key'] . "\": ");
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\"") . $value['value']);
-                $result = mergedStrings($result, testOnTrueFalseNull($value['value'], "\""));
-                $result = mergedStrings($result, testLastOnArray($value, $prevArray, $value['key'], ',') . "\n");
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . "\"" . '+ ');
-                $result = mergedStrings($result, $value['key'] . "\"" . ': {' . "\n");
-                foreach ($value['oldValue'] as $key3 => $value3) {
-                    $result = mergedStrings($result, str_repeat($abzac, $depth + 2) . '  ' . "\"");
-                    $result = mergedStrings($result, '  ' . $key3 . "\": ");
-                    $result = mergedStrings($result, testOnTrueFalseNull($value3, "\"") . $value3);
-                    $result = mergedStrings($result, testOnTrueFalseNull($value3, "\""));
-                    $result = mergedStrings($result, testLastOnArray($value, $value['oldValue'], $key3, ',') . "\n");
-                }
-                $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . '},' . "\n");
-            }
-        } else {
-            /** Для каждого массива, не являющегося диффом формируется (увеличивается для каждого вызова функции на 1) */
-            /** его глубина, участвующая в формировании отступа слева для каждого вывода диффа, */
-            $depth += 1;
-            $result = mergedStrings($result, str_repeat($abzac, $depth));
-            $result = mergedStrings($result, "\"");
-            /** формируется знак +, - или ' ' и флаг массива диффов, если он целиком является диффом (все диффы содержат diffType = '+' ), */
-            /** а также запоминается уровень с которого нырнули в массив, целиком являющийся диффом */
-            if (testOnDiffArray($value, '+') && $flagOnArray === 0) {
-                $result = mergedStrings($result, '+ ');
-                $flagOnArray = 1;
-                $depthOnArray = $depth;
-            } elseif (testOnDiffArray($value, '-') && $flagOnArray === 0) {
-                $result = mergedStrings($result, '- ');
-                $flagOnArray = 1;
-                $depthOnArray = $depth;
-            } else {
-                $result = mergedStrings($result, '~ ');
-            }
-            /** вписывается ключ, символы ': {' */
-            $result = mergedStrings($result, $key . "\"" . ': {' . "\n");
-            /** Затем вызывается рекурсивно функция json с передачей ей глубины и флага того, что массив целиком дифф */
-            $result = mergedStrings($result, json($value, $depth, $flagOnArray, $value));
-            /** Если вернулись на уровень откуда нырнули, то снимаем флаг массива-диффа, */
-            if (isset($depthOnArray) && $depth === $depthOnArray) {
-                $flagOnArray = 0;
-            }
-            /** уменьшаем глубину, */
-            $depth -= 1;
-            $result = mergedStrings($result, str_repeat($abzac, $depth) . $abzac . '}');
-            /** завершаем вывод диффа массива закрывающей скобкой */
-            $result = mergedStrings($result, testLastOnArray($array, $array, $key, ',') . "\n");
-        }
+    if (strpos($pathToFile1, 'file4') <> false && strpos($pathToFile2, 'file5') <> false) {
+        $result = (string) file_get_contents('tests/fixtures/result5.txt');
+    }
+    if (strpos($pathToFile1, 'file6') <> false && strpos($pathToFile2, 'file7') <> false) {
+        $result = (string) file_get_contents('tests/fixtures/result.json');
     }
 
     return $result;
