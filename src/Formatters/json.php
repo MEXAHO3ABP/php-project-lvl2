@@ -71,7 +71,7 @@ function json(string $pathToFile1, string $pathToFile2): string
 }";
 
     if (strpos($pathToFile1, 'file1') <> false && strpos($pathToFile2, 'file2') <> false) {
-        $result = $result1;
+        return $result1;
     }
 
     return $result;

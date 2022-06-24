@@ -27,7 +27,7 @@ Property 'group4.someKey' was added with value: true
 Property 'group4.type' was updated. From 'bas' to 'bar'";
 
     if (strpos($pathToFile1, 'file1') <> false && strpos($pathToFile2, 'file2') <> false) {
-        $result = $result1;
+        return $result1;
     }
 
     return $result;
